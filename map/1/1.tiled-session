@@ -1,0 +1,44 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "1.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "1.tmx": {
+            "scale": 3,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 180.99999999999997,
+                "y": 123.99999999999999
+            }
+        },
+        "C:/Users/Admin/Documents/VSCode/sRPG/map/medival.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
+        "medival16.tsx": {
+            "scaleInDock": 2
+        }
+    },
+    "last.exportedFilePath": "C:/Users/Admin/Documents/VSCode/sRPG/map/1",
+    "map.lastUsedExportFilter": "Lua файлы (*.lua)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "openFiles": [
+        "1.tmx"
+    ],
+    "project": "1.tiled-project",
+    "recentFiles": [
+        "1.tmx",
+        "C:/Users/Admin/Documents/VSCode/sRPG/map/medival.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}
