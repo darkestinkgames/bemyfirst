@@ -174,7 +174,7 @@ Cell = {
                     end
                 end,
                 getCost = function (cell, unit)
-                    local impass = impass
+                    -- local impass = impass
                     if not cell.data.vartist[unit.move.id] then
                         cell.data.vartist[unit.move.id] = unit.move.lvl > cell.data[unit.move.typ].lvl
                         and math.max(1, cell.data[unit.move.typ].pass - unit.move.pass)
@@ -192,11 +192,9 @@ Cell = {
 }
 
 -- spritecodes
-do
-    for i, tile in ipairs(Cell.data.tile) do
-        for f, index in ipairs(tile.spritecodes) do
-            Cell.data.spritecode[index] = tile
-        end
+for i, tile in ipairs(Cell.data.tile) do
+    for f, index in ipairs(tile.spritecodes) do
+        Cell.data.spritecode[index] = tile
     end
 end
 
@@ -204,8 +202,9 @@ end
 ---@param sprites number[]
 ---@param x number
 ---@param y number
+---@param list obj.Cell[]
 ---@return obj.Cell
-function Cell:new(sprites, x, y)
+function Cell:new(sprites, x, y, list)
     ---@class obj.Cell
     ---@field key string
     ---@field position obj.Position
@@ -227,7 +226,7 @@ function Cell:new(sprites, x, y)
         tile = self.data.spritecode[sprites[#sprites]],
         nearest = {},
     }
-    return setmetatable(obj, self.data.obj)
+    list[obj.key] = setmetatable(obj, self.data.obj)
 end
 
 

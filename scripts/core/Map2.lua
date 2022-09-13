@@ -1,20 +1,20 @@
 -- -@class Map<a>: { files: table, nearest: table, load: function, draw: function, [string]: a }
 
----Чарунка карти
----@class Map.cell
----@field key string # ключ карти
----@field image love.Canvas # зображення тайла
----@field data table # ландшафт
----@field position cpt.Position # координати карти
----@field screen cpt.Position # координати екрану
----@field nearest table # дотичні чарунки
+-- -Чарунка карти
+-- -@class Map.cell
+-- -@field key string # ключ карти
+-- -@field image love.Canvas # зображення тайла
+-- -@field data table # ландшафт
+-- -@field position cpt.Position # координати карти
+-- -@field screen cpt.Position # координати екрану
+-- -@field nearest table # дотичні чарунки
 
----@class obj.Map
----@field files string[]
----@field nrst number[]
----@field load fun(self: obj.Map, filename: string|number)
----@field draw fun(self: obj.Map)
----@field [string] Map.cell
+-- -@class obj.Map
+-- -@field files string[]
+-- -@field nrst number[]
+-- -@field load fun(self: obj.Map, filename: string|number)
+-- -@field draw fun(self: obj.Map)
+-- -@field [string] Map.cell
 
 Map = setmetatable({}, {
     __index = {

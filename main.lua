@@ -1,4 +1,6 @@
 function love.load(...)
+    -- базові глобальні функції, які покищо нема де притулити
+    require('code/fn/getKey')
     -- 
     require('code/game/Data')
     -- 
