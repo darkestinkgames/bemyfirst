@@ -1,16 +1,26 @@
 function love.load(...)
     -- базові глобальні функції, які покищо нема де притулити
     require('code/fn/getKey')
-    -- 
-    require('code/game/Data')
-    -- 
-    require('code/tool/getKey')
+
+    -- функції, що нема де притулити, покищо будуть глобальними
     require('code/tool/Position')
-    -- 
-    require('code/game/Camera')
-    require('code/game/Cell')
+
+    -- технічна інф-а по грі
+    require('code/game/Data')
+
+    ----- мапа
     require('code/game/Map')
+    -- чарунки
+    require('code/game/Cell')
+    -- будівлі
+    -- юніти
+    require('code/game/UnitMove')
+    require('code/game/Unit')
+
+    -- типу класи, що не створюють об’єктів
+    require('code/game/Camera')
     require('code/game/Sprite')
+
     -- 
     Map:load(1)
 

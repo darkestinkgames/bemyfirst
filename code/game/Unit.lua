@@ -1,5 +1,7 @@
 ---@class game.Unit
-Unit = {}
+Unit = {
+    list = Map.unit,
+}
 
 function Unit:new(name, sprites, hp, ap)
 
@@ -33,6 +35,5 @@ function Unit:new(name, sprites, hp, ap)
         name = name,
         sprites = sprites,
     }
-    UnitMove:add(unit)
-    return unit
+    table.insert(self.list, unit)
 end

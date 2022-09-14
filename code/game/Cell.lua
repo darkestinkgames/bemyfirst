@@ -2,6 +2,7 @@ local impass = 10
 
 ---@class game.Cell
 Cell = {
+    list = Map.cell,
     data = {
         ---@type data.Tile[]
         tile = {
@@ -226,7 +227,7 @@ function Cell:new(sprites, x, y, list)
         tile = self.data.spritecode[sprites[#sprites]],
         nearest = {},
     }
-    list[obj.key] = setmetatable(obj, self.data.obj)
+    self.list[obj.key] = setmetatable(obj, self.data.obj)
 end
 
 
