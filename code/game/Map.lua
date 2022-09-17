@@ -1,15 +1,12 @@
+---Клас створює та зберігає об’єкти карти
 ---@class game.Map
--- -@overload fun(x: number|string, y?:number): obj.Cell
----@field load fun(index: number|string)
----@field files string[]
----@field nrst number[]
----@field cell obj.Cell[]
--- -@field build obj.Build[]
----@field unit obj.Unit[]
+---@overload fun(x: number|string, y?:number): obj.Cell
 Map = {
+    ---@type string[]
     files = {
         'code/map/1',
     },
+
     nrst = {
         0, -1,
         -1, 0,
@@ -17,19 +14,26 @@ Map = {
         0, 1,
     },
 
-    cell = {},
-    build = {},
-    unit = {},
+    ---@type table<string, obj.Cell>
+    cell_grid = {},
+
+    ---@type obj.Build[]
+    build_list = {},
+
+    ---@type obj.Unit[]
+    unit_list = {},
 
     player = {},
 }
 
+---Завантажити карту
+---@param filename number | string # номер карти за списку, або шлях до файлу
 function Map:load(filename)
     local data_input = require( type(filename) == "number" and self.files[filename] or filename )
     local width = data_input.width
 
-    for key in pairs(self.cell) do
-        self.cell[key] = nil
+    for key in pairs(self.cell_grid) do
+        self.cell_grid[key] = nil
     end
 
     for i = 1, #data_input.layers[1].data do
@@ -41,24 +45,24 @@ function Map:load(filename)
             table.insert(sprites, data_input.layers[f].data[i])
         end
 
-        Cell:new(sprites, x, y, self.cell)
+        Cell:new(sprites, x, y, self.cell_grid)
     end
 end
 
--- відображати
+-- відображати карту
 function Map:draw()
     -- чарунки
-    for _, cell in pairs(self.cell) do
+    for _, cell in pairs(self.cell_grid) do
         cell:draw()
     end
 
     -- будівлі
-    for _, build in pairs(self.build) do
+    for _, build in pairs(self.build_list) do
         build:draw()
     end
     
     -- юніти
-    for _, unit in pairs(self.unit) do
+    for _, unit in pairs(self.unit_list) do
         unit:draw()
     end
 
@@ -84,11 +88,11 @@ Map = setmetatable(Map, {
     ---@param x number|string
     ---@param y? number
     __call = function (self, x, y)
-        if type(x) == "number" then
-            return self.cell[x]
+        if type(x) == "string" then
+            return self.cell_grid[x]
         end
         if type(x) == "number" then
-            return self.cell[getKey(x,y)]
+            return self.cell_grid[getKey(x,y)]
         end
     end
 })
