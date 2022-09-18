@@ -1,46 +1,61 @@
 ---@class game.UnitMove
-UnitMove = {
-    ---
-    ---@class obj.UnitMove
-    ---@field id string  # аби щоразу не розраховувати вартість входження, а брати готове значення за ключем
-    ---@field typ 'zem'|'vod'|'pov'  # якщо будуть амфібії, додам окрему дію на зміну пересування (чи зберу всі дії до окремого контейнеру), хоча може й треба було б робити
-    ---@field lvl 1|2  # пересування 1 рівня — для звичайних тайлів, 2 — гори, ріки, тощо
-    ---@field pass 0|1|2|3  # зменшення вартості входження
-    ---@field value number  # дальність пересування за хід
-    ---@field path table  # (пошук шляху) вартість входження у будь-яку чарунку мапи
-    ---@field ui table  # 
-    ---@field cd number|nil  # (перезарядка) скільки ходів треба чекати до повторного використання дії
-    ---@field delay number|nil  # стан перезарядки (дія доступна, якщо значення менше за 1)
-    ---
-    -- -@field getCost fun(self: obj.UnitMove, key: string)  #
-    -- -@field pathUpdate fun(self: obj.UnitMove)  #
-    -- -@field uiUpdate fun(self: obj.UnitMove, key?: string)  #
-    obj = {}
-}
+UnitMove = {}
 
--- Створюю та одразу додаю
+---@class objUnitMove
+local obj = {}
+
+-- отримати вартість входження
+---@param cell obj.Cell
+function obj:getCellCost(cell)
+    local impass = 15
+    -- розрахувати вартість входження, якщо не було
+    if not cell.tile.vartist[self.id] then
+        -- чи дозволяє рівень входження?
+        cell.tile.vartist[self.id] = self.lvl > cell.tile[self.typ].lvl
+        -- так: знайти нову вартість
+        and math.max(1, cell:getCost(self.typ).cost - self.pass)
+        -- ні: то й ні
+        or impass
+    end
+    -- отримати дефолтну вартість
+    local vartist = cell.tile.vartist[self.id]
+    -- якщо там юніт
+    if cell.unit then
+        vartist = cell.unit.team == self.owner.team and vartist or impass
+    end
+    -- 
+    return vartist
+end
+
+function obj:getCost(key) return self.path[key] end
+
+function obj:pathUpdate() end
+
+UnitMove.obj = {__index = obj}
+
+-- Створюю та додаю
+---@param unit objUnit
+---@param typ TileCostTyp
+---@param lvl number
+---@param pass number
+---@param value number
+---@param cd number
 function UnitMove:add(unit, typ, lvl, pass, value, cd)
-    ---@type obj.UnitMove
+    ---@class objUnitMove
     local move = {
-        id = typ .. 'lvl' .. 'pass',
-        typ = typ,
-        lvl = lvl,
-        pass = pass,
-        value = value,
-        path = {},
-        ui = {},
-        cd = cd or 1,
-        delay = 0,
+        id = typ .. 'lvl' .. 'pass', -- ключ до готових значень
+        owner = unit, -- 
+
+        typ = typ, --
+        lvl = lvl, -- щоб катапульта по річці не їздила і т.ін.
+        pass = pass, -- знижує вартість входження
+        value = value, -- дальність пересування за хід
+
+        path = {}, ---@type number[] # розрахунки для пошуку шляху
+        ui = {}, -- для відображення шляху (4) пункт призначення поза зоною досяжності (3) шлях поза зоною (2) пункт у зоні (1) шлях у зоні
+        cd = cd or 1, -- 
+        delay = 0, -- 
     }
-    unit.move = setmetatable(move, self.obj) -- мав бажання просто скопіювати усі функції, але покищо спробую так
-end
 
----@type obj.UnitMove
-local obj = UnitMove.obj
-
-function obj:getCost(key)
-    return self.path[key]
-end
-
-function obj:pathUpdate()
+    unit.move = setmetatable(move, self.obj)
 end

@@ -6,11 +6,11 @@ Unit = {
 function Unit:new(name, sprites, hp, ap)
 
     ---
-    ---@class obj.Unit
+    ---@class objUnit
     ---
     ---@field name string
     ---@field owner obj.Player|nil
-    ---@field team 0|1|2|3|4
+    ---@field team number
     ---@field stats obj.UnitStats
     ---@field sprites number[]
     ---
@@ -23,7 +23,7 @@ function Unit:new(name, sprites, hp, ap)
     ---@field rest obj.UnitRest
     ---@field def obj.UnitDef
     ---
-    ---@field move obj.UnitMove
+    ---@field move objUnitMove
     ---@field atk obj.UnitAtk
     ---@field cap obj.UnitCap
     ---

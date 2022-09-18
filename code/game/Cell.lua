@@ -1,28 +1,30 @@
-local impass = 10
+local impass = 15
 
 ---@class game.Cell
 Cell = {
-    list = Map.cell,
+    list = Map.cell_grid,
     data = {
         ---@type data.Tile[]
         tile = {
 
-            ---@class data.Tile             #
-            ---@field nazva string          #
-            ---@field zahyst number         #
-            ---@field zem obj.TileCost      #
-            ---@field vod obj.TileCost      #
-            ---@field pov obj.TileCost      #
-            ---@field vartist table         #
-            ---@field spritecodes number[]  #
+            ---Структура тайлу (інфа про ландшафт, на який посилається кожна чарунка мапи)
+            ---@class data.Tile
+            ---@field nazva string          # назва тайлу (відображається у грі)
+            ---@field zahyst number         # бонус до захисту юніта
+            ---@field zem obj.TileCost      # ~ по землі
+            ---@field vod obj.TileCost      # ~ по воді
+            ---@field pov obj.TileCost      # ~ у повітрі
+            ---@field vartist table         # готові розрахунки вартості входження для кожного типу пересування
+            ---@field spritecodes number[]  # відповідні спрайти, щоб конвертувати з Tiled
             {
                 -- nazva = 'Дорога (doroha)',
                 nazva = 'Дорога',
                 zahyst = 0,
-                
+
+                ---вартість входження
                 ---@class obj.TileCost     #
-                ---@field lvl 0|1|10       # 
-                ---@field cost 1|2|3|4|10  # 
+                ---@field lvl 0|1|15       # рівень входження (бо віз не їздить по річці, на приклад)
+                ---@field cost 1|2|3|4|15  # вартість входження
                 zem = {cost = 1, lvl = 0},
                 
                 vod = {cost = impass, lvl = impass},
@@ -204,31 +206,38 @@ end
 ---@param x number
 ---@param y number
 ---@param list obj.Cell[]
----@return obj.Cell
 function Cell:new(sprites, x, y, list)
+    -- -@class obj.Cell
+    -- -@field key string
+    -- -@field position obj.Position
+    -- -@field screen obj.Position
+    -- -@field sprites number[]
+    -- -@field tile data.Tile
+    -- -@field strc table|nil
+    -- -@field unit table|nil
+    -- -@field nearest obj.Cell[]
+    -- -
+    -- -@field draw fun(self: obj.Cell)
+    -- -@field getCost fun(self: obj.Cell, unit: obj.Unit)
+
     ---@class obj.Cell
-    ---@field key string
-    ---@field position obj.Position
-    ---@field screen obj.Position
-    ---@field sprites number[]
-    ---@field tile data.Tile
-    ---@field strc table|nil
-    ---@field unit table|nil
-    ---@field nearest obj.Cell[]
-    ---
-    ---@field draw fun(self: obj.Cell)
-    ---@field getCost fun(self: obj.Cell, unit: obj.Unit)
-    local obj = {
-        key = getKey(x, y),
-        position = Position(x, y),
-        screen = Position( (x - 1) * Data.tile_w, (y - 1) * Data.tile_h ),
-        -- screen = Position(x * Data.tile_w, y * Data.tile_h),
-        sprites = sprites,
+    local cell = {
+        key = getKey(x, y),  -- ключ розташування у Map.cell_grid
+        position = Position(x, y),  -- х/у на мапі
+        
+        sprites = sprites,  -- список спрайтів, які відображають цю чарунку
+        screen = Position( (x - 1) * Data.tile_w, (y - 1) * Data.tile_h ),  -- х/у на екрані
+
         tile = self.data.spritecode[sprites[#sprites]],
-        nearest = {},
+        build = nil,  ---@type obj.Build|nil
+        unit = nil,  ---@type obj.Unit|nil
+
+        nearest = {},  ---@type obj.Cell[] # 
     }
-    self.list[obj.key] = setmetatable(obj, self.data.obj)
+
+    self.list[cell.key] = setmetatable(cell, self.data.obj)
 end
+
 
 
 
@@ -254,3 +263,28 @@ end
 -- end
 
 
+---@class obj.Cell
+local obj = {}
+
+---
+function obj:draw()
+    for _, sprite in ipairs(self.sprites) do
+        Sprite(sprite, self.position())
+    end
+end
+
+-- 
+---@param typ TileCostTyp
+---@return obj.TileCost
+function obj:getCost(typ)
+    -- assert(typ == 'zem' or typ == 'vod' or typ == 'pov')
+    return self.tile[typ]
+end
+
+Cell.obj = obj
+
+-- види пересування
+---@alias TileCostTyp
+---|'zem' # по землі
+---|'vod' # по воді
+---|'pov' # у повітрі
