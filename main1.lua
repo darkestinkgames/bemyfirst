@@ -6,12 +6,12 @@ function love.load(...)
     require('scripts/data/Gra')
     require('scripts/data/TileData')
     require('scripts/fn/gameResizeFit')
-    require('scripts/fn/gameScreenToggle')
-    require('scripts/fn/getCopy')
-    require('scripts/fn/getKey')
+    require('code/fn/gameScreenToggle')
+    require('code/fn/getCopy')
+    require('code/fn/getKey')
     require('scripts/fn/getMapCost')
     require('scripts/fn/printTable')
-    require('scripts/fn/setGameFont')
+    require('code/fn/setGameFont')
     -- require('')
     
     require('scripts/core/Sprite3')
@@ -141,3 +141,4 @@ function love.mousepressed(x, y, button, istouch, presses)
     som:updatePath()
 end
 
+function love.wheelmoved( x , y ) end

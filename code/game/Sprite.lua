@@ -45,6 +45,8 @@ Sprite = setmetatable(Sprite, {
     end,
 })
 
+love.graphics.setDefaultFilter("nearest", "nearest")
+
 Sprite:add('sprite/medival16.png', 16)
 
 Sprite:filter()
