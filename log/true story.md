@@ -403,7 +403,7 @@ https://github.com/darkestinkgames/bemyfirst
 але потім я подумав: а нащо мені окремий об’єкт? і так норм буде<br />
 коротше, з якогось дива зсув/маштаб більше не реагують взагалі...
 
-![true story 6.jpeg](true story 6.jpeg)
+![true story 6.jpeg](true%20story%206.jpeg)
 
 лише з купою **print**’ів нарешті з’ясував: що десь прогавив **pushtimer**’и
 
