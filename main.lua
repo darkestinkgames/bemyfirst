@@ -1,6 +1,3 @@
----@type objCamera
-c1 = nil
-
 function love.load(...)
 
     -- базові глобальні функції, які покищо нема де притулити
@@ -28,9 +25,7 @@ function love.load(...)
     require('code/game/Sprite')
     
     Map:load(1)
-    
-    c1 = Camera:new()
-    c1:initScale(2)
+    Camera:initScale(1)
 end
 
 
@@ -38,42 +33,54 @@ function love.keypressed(key)
     if key == 'escape' then love.event.push('quit') end
     if key == 'f4' then
         gameScreenToggle()
-        c1:resetFrame()
+        Camera:resetFrame()
     end
 
     local step = 64
-
     if key == 'w' then
-        c1:addPosition(0, step)
+        Camera:addPosition(0, step)
     end
     if key == 's' then
-        c1:addPosition(0, -step)
+        Camera:addPosition(0, -step)
     end
-
     if key == 'a' then
-        c1:addPosition(step, 0)
+        Camera:addPosition(step, 0)
     end
     if key == 'd' then
-        c1:addPosition(-step, 0)
+        Camera:addPosition(-step, 0)
     end
 end
 
 
 function love.draw()
-    c1:draw(Map)
+    Camera:draw(Map)
 end
 
 
 
 function love.update(dt)
     dt = math.min(dt, 0.5)
-    c1:update(dt)
+    Camera:update(dt)
+
+    -- local step = 32
+    -- if love.keyboard.isDown("w") then
+    --     Camera:addPosition(0, step)
+    -- end
+    -- if love.keyboard.isDown("s") then
+    --     Camera:addPosition(0, -step)
+    -- end
+    -- if love.keyboard.isDown("a") then
+    --     Camera:addPosition(step, 0)
+    -- end
+    -- if love.keyboard.isDown("d") then
+    --     Camera:addPosition(-step, 0)
+    -- end
 end
 
 
 
 function love.resize(w, h)
-    c1:resetFrame()
+    Camera:resetFrame()
 end
 
 
@@ -83,7 +90,7 @@ function love.mousepressed(x, y, button, istouch, presses) end
 
 
 function love.wheelmoved( x , y )
-    c1:addScale(y * 0.5)
+    Camera:addScale(y)
 end
 
 
