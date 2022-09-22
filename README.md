@@ -9,3 +9,7 @@
 з інструментів: tiled, vs code, love 2d, деяке розуміння програмування та ентузіазм
 
 сподіваюсь, буде весело :)
+
+--
+
+| [нотатки](log/true_story.md) | [(commits/main)](https://github.com/darkestinkgames/bemyfirst/commits/main) |

@@ -4,13 +4,14 @@ function love.load(...)
     require('code/fn/gameScreenToggle')
     require('code/fn/getCopy')
     require('code/fn/getKey')
+    require('code/fn/newScreenFrame')
 
     -- допоміжне
     require('code/tool/Position')
 
     -- технічна інф-а по грі
     require('code/game/Data')
-    
+
     ----- мапа
     require('code/game/Map')
     -- чарунки
@@ -19,11 +20,11 @@ function love.load(...)
     -- юніти
     require('code/game/UnitMove')
     require('code/game/Unit')
-    
+
     -- типу класи, що не створюють об’єктів
     require('code/game/Camera')
     require('code/game/Sprite')
-    
+
     Map:load(1)
     Camera:initScale(1)
 end
@@ -31,24 +32,25 @@ end
 
 function love.keypressed(key)
     if key == 'escape' then love.event.push('quit') end
+
     if key == 'f4' then
         gameScreenToggle()
         Camera:resetFrame()
     end
 
-    local step = 64
-    if key == 'w' then
-        Camera:addPosition(0, step)
-    end
-    if key == 's' then
-        Camera:addPosition(0, -step)
-    end
-    if key == 'a' then
-        Camera:addPosition(step, 0)
-    end
-    if key == 'd' then
-        Camera:addPosition(-step, 0)
-    end
+    -- local step = 64
+    -- if key == 'w' then
+    --     Camera:addPosition(0, step)
+    -- end
+    -- if key == 's' then
+    --     Camera:addPosition(0, -step)
+    -- end
+    -- if key == 'a' then
+    --     Camera:addPosition(step, 0)
+    -- end
+    -- if key == 'd' then
+    --     Camera:addPosition(-step, 0)
+    -- end
 end
 
 
@@ -60,21 +62,28 @@ end
 
 function love.update(dt)
     dt = math.min(dt, 0.5)
-    Camera:update(dt)
 
-    -- local step = 32
-    -- if love.keyboard.isDown("w") then
-    --     Camera:addPosition(0, step)
-    -- end
-    -- if love.keyboard.isDown("s") then
-    --     Camera:addPosition(0, -step)
-    -- end
-    -- if love.keyboard.isDown("a") then
-    --     Camera:addPosition(step, 0)
-    -- end
-    -- if love.keyboard.isDown("d") then
-    --     Camera:addPosition(-step, 0)
-    -- end
+    -- 
+    local step = 64
+    local x, y = 0, 0
+    if love.keyboard.isDown("w") then
+        y = y + step
+    end
+    if love.keyboard.isDown("s") then
+        y = y - step
+    end
+    if love.keyboard.isDown("a") then
+        x = x + step
+    end
+    if love.keyboard.isDown("d") then
+        x = x - step
+    end
+    if x ~= 0 or y ~= 0 then
+        Camera:addPosition(x, y)
+    end
+
+    -- 
+    Camera:update(dt)
 end
 
 

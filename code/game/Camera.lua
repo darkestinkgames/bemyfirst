@@ -24,10 +24,10 @@ Camera = {
 
     push_x = 0,
     push_y = 0,
-    
+
     pushtimer_scale = 0.15, -- маштаб
     pushtimer_pos = 0.25, -- за який час проходить пересування камери
-    
+
     -- за який час треба дійти
 
     timer_scale = 0, -- маштаб
@@ -59,7 +59,6 @@ function Camera:setScale(scale)
 end
 
 function Camera:setPosition(x, y)
--- print('setPosition', x, y)
     self.cam_x = x
     self.cam_y = y
 end
@@ -69,23 +68,25 @@ end
 function Camera:pushScale(scale, timer)
     scale = math.min(self.scale_max, math.max(self.scale_min, scale))
     timer = timer or self.pushtimer_scale
-    self.timer_scale = --[[self.timer_scale +]] timer
-    local k =  scale / self.push_scale
+    
+    local k = scale / self.push_scale
+    
+    self.timer_scale = timer
     self.push_scale = scale
+    
+    local a = self.push_x
     self:pushPosition(
         self.mid_x - (self.mid_x - self.push_x) * k,
         self.mid_y - (self.mid_y - self.push_y) * k,
         timer
     )
+    -- print(a .. ' -> ' .. self.push_x)
 end
 
 function Camera:pushPosition(x, y, timer)
--- print('pushPosition', timer)
-    timer = timer or self.pushtimer_pos
-    self.timer_pos = --[[self.timer_pos +]] timer
+    self.timer_pos = timer or self.pushtimer_pos
     self.push_x = x
     self.push_y = y
--- print('pushPosition', self.cam_x .. ' => ' .. self.push_x, self.cam_y .. ' => ' .. self.push_y, timer)
 end
 
 
@@ -121,73 +122,42 @@ function Camera:update(dt)
 end
 
 function Camera:updScale(dt)
-    if self.timer_scale > 0 then
+    if self.timer_scale >= 0 then
         if dt > self.timer_scale then
             self:setScale(self.push_scale)
-            self.timer_scale = 0
         else
             local k = dt / self.timer_scale
             self:setScale((self.push_scale - self.scale) * k + self.scale)
-            self.timer_scale = self.timer_scale - dt
         end
+        self.timer_scale = self.timer_scale - dt
     end
 end
 
 function Camera:updPos(dt)
-    if self.timer_pos > 0 then
+    local a = self.timer_pos
+    if self.timer_pos >= 0 then
+        local x, y = self.push_x, self.push_y
         if dt > self.timer_pos then
             self:setPosition(self.push_x, self.push_y)
-            self.timer_pos = 0
         else
--- print('updPos')
             local k = dt / self.timer_pos
             self:setPosition(
                 (self.push_x - self.cam_x) * k + self.cam_x,
                 (self.push_y - self.cam_y) * k + self.cam_y
             )
-            self.timer_pos = self.timer_pos - dt
         end
+        self.timer_pos = self.timer_pos - dt
+        -- print(x .. ' -> ' .. self.push_x, y .. ' -> ' .. self.push_y)
     end
+    -- print(a .. ' -> ' .. self.timer_pos)
 end
 
 
 
 function Camera:resetFrame()
-    local w , h = love.graphics.getDimensions()
+    local w , h = love.graphics.getWidth() / 2 , love.graphics.getHeight() / 2
 
-    -- підігнати нову позицію камери
-    -- local k = (w / h) > (self.mid_x / self.mid_y) and (w / 2) / self.mid_x or (h / 2) / self.mid_y
+    self:pushPosition( w - (self.mid_x - self.push_x) , h - (self.mid_y - self.push_y) , 0 )
 
-    -- local k1 = self.mid_x / self.mid_y
-    -- local k2 = w / h
-    -- self:pushScale(self.scale * k1 / k2)
-    -- print(k, k1, k2)
-
-    self.mid_x , self.mid_y = w / 2 , h / 2
+    self.mid_x , self.mid_y = w , h
 end
-
-
-
---[[
-
-    ---@class gameCamera
-    Camera = {
-        obj = cam,
-    
-        timer_pos = 0.25, -- за який час проходить пересування камери
-        timer_scale = 0.15, -- за який час проходить маштабування
-    
-        scale_min = 1,
-        scale_max = 4,
-    }
-    
-    function Camera:new()
-    
-        ---@type objCamera
-        local obj = getCopy(self.obj)
-    
-        return obj
-    
-    end
-    
-]]
