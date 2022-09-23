@@ -4,7 +4,7 @@ function love.load(...)
     require('code/fn/gameScreenToggle')
     require('code/fn/getCopy')
     require('code/fn/getKey')
-    require('code/fn/newScreenFrame')
+    require('code/fn/newScreenRect')
 
     -- допоміжне
     require('code/tool/Position')
@@ -26,7 +26,8 @@ function love.load(...)
     require('code/game/Sprite')
 
     Map:load(1)
-    Camera:initScale(1)
+    Camera:initScreenFrame(Map)
+    Camera:initScale(2)
 end
 
 
@@ -104,8 +105,12 @@ end
 
 
 
--- розкоментувати останній рядок, щоб запускалась попередня версія (до того, як усе зламав)
+-- розкоментувати main1, щоб запускалась попередня версія (до того, як усе зламав)
 -- F4 перемикач (екран/вікно)
 -- (будь-який) клік миші щоб встановити умовного юніта (ріки, гори та моря) — для перевірки пошук шляху
 -- Esc — вихід
--- require('main1')
+-- require('test/main1')
+
+
+-- камера тест
+require('test/main2')

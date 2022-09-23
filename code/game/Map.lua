@@ -1,6 +1,6 @@
 ---Клас створює та зберігає об’єкти карти
 ---@class game.Map
----@overload fun(x: number|string, y?:number): obj.Cell
+---@overload fun(x: number|string, y?:number): objCell
 Map = {
     ---@type string[]
     files = {
@@ -14,7 +14,7 @@ Map = {
         0, 1,
     },
 
-    ---@type table<string, obj.Cell>
+    ---@type table<string, objCell>
     cell_grid = {},
 
     ---@type obj.Build[]
@@ -25,6 +25,26 @@ Map = {
 
     player = {},
 }
+
+-- дані для камери
+function Map:getScreenRect()
+    return self.screenrect.x_min, self.screenrect.x_max, self.screenrect.y_min, self.screenrect.y_max
+end
+
+-- рамка відображення на екрані
+function Map:initScreenRect()
+    self.screenrect = newScreenRect()
+    for key, cell in pairs(self.cell_grid) do
+        self.screenrect.x_max = math.max(
+            self.screenrect.x_max,
+            cell.screen.x + Sprite[cell.sprites[1]]:getWidth()
+        )
+        self.screenrect.y_max = math.max(
+            self.screenrect.y_max,
+            cell.screen.y + Sprite[cell.sprites[1]]:getHeight()
+        )
+    end
+end
 
 ---Завантажити карту
 ---@param filename number | string # номер карти за списку, або шлях до файлу
@@ -47,6 +67,8 @@ function Map:load(filename)
 
         Cell:new(sprites, x, y, self.cell_grid)
     end
+
+    self:initScreenRect()
 end
 
 -- відображати карту

@@ -170,7 +170,7 @@ Cell = {
         --
         obj = {
             __index = {
-                ---@param self obj.Cell
+                ---@param self objCell
                 draw = function (self)
                     for index, sprite in ipairs(self.sprites) do
                         Sprite(sprite, self.screen())
@@ -205,9 +205,9 @@ end
 ---@param sprites number[]
 ---@param x number
 ---@param y number
----@param list obj.Cell[]
+---@param list objCell[]
 function Cell:new(sprites, x, y, list)
-    -- -@class obj.Cell
+    -- -@class objCell
     -- -@field key string
     -- -@field position obj.Position
     -- -@field screen obj.Position
@@ -215,12 +215,12 @@ function Cell:new(sprites, x, y, list)
     -- -@field tile data.Tile
     -- -@field strc table|nil
     -- -@field unit table|nil
-    -- -@field nearest obj.Cell[]
+    -- -@field nearest objCell[]
     -- -
-    -- -@field draw fun(self: obj.Cell)
-    -- -@field getCost fun(self: obj.Cell, unit: obj.Unit)
+    -- -@field draw fun(self: objCell)
+    -- -@field getCost fun(self: objCell, unit: obj.Unit)
 
-    ---@class obj.Cell
+    ---@class objCell
     local cell = {
         key = getKey(x, y),  -- ключ розташування у Map.cell_grid
         position = Position(x, y),  -- х/у на мапі
@@ -232,7 +232,7 @@ function Cell:new(sprites, x, y, list)
         build = nil,  ---@type obj.Build|nil
         unit = nil,  ---@type obj.Unit|nil
 
-        nearest = {},  ---@type obj.Cell[] # 
+        nearest = {},  ---@type objCell[] # 
     }
 
     self.list[cell.key] = setmetatable(cell, self.data.obj)
@@ -248,11 +248,11 @@ end
 -- ---@param scode number
 -- ---@param x number
 -- ---@param y number
--- ---@return obj.Cell
+-- ---@return objCell
 -- function Cell:new(scode, x, y)
 --     local tile = self.data.spritecode[scode]
 --     assert(tile)
---     ---@type obj.Cell
+--     ---@type objCell
 --     local obj = {
 --         key = 'x' .. x .. 'y' .. y,
 --         image = {},
@@ -263,7 +263,7 @@ end
 -- end
 
 
----@class obj.Cell
+---@class objCell
 local obj = {}
 
 ---

@@ -1,5 +1,6 @@
+require('test/mainreset')
+
 function love.load(...)
-    -- require('scripts/meta')
     require('scripts/cpt/Position')
     require('scripts/core/Unit')
     require('scripts/cpt/Move')
@@ -140,5 +141,3 @@ function love.mousepressed(x, y, button, istouch, presses)
     som.cell = Map[Current_Key] or som.cell
     som:updatePath()
 end
-
-function love.wheelmoved( x , y ) end

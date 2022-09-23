@@ -1,10 +1,13 @@
----Усі спрайти гри
----@class game.Sprite
----@field add fun(self: game.Sprite, filename: string, width: number, height?: number) # Підвантажити спрайт-сет з файлу й додати до загального списку окремими спрайтами
----@field filter fun(self: game.Sprite, min?: love.FilterMode, mag?: love.FilterMode) # Фільтр маштабування спрайтів
+---Усі спрайти гри тут
+---@class gameSprite
+---@field add fun(self: gameSprite, filename: string, width: number, height?: number) # Підвантажити спрайт-сет з файлу й додати до загального списку окремими спрайтами
+---@field filter fun(self: gameSprite, min?: love.FilterMode, mag?: love.FilterMode) # Фільтр маштабування спрайтів
+
+---@type gameSprite | love.Canvas[]
 ---Вивести вказаний спрайт на екран
 ---@overload fun(key: number, x?: number, y?: number)
 Sprite = {}
+
 
 ---@diagnostic disable-next-line: param-type-mismatch
 Sprite = setmetatable(Sprite, {

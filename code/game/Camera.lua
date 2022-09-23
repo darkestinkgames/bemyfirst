@@ -3,10 +3,7 @@ Camera = {
     scale_min = 1,
     scale_max = 5,
 
-    -- x_min = 0,
-    -- x_max = 0,
-    -- y_min = 0,
-    -- y_max = 0,
+    screenrect = nil,
 
     -- поточні значення
 
@@ -28,11 +25,20 @@ Camera = {
     pushtimer_scale = 0.15, -- маштаб
     pushtimer_pos = 0.25, -- за який час проходить пересування камери
 
-    -- за який час треба дійти
+    -- скільки часу лишилося, щоби дійти до push’ів
 
     timer_scale = 0, -- маштаб
     timer_pos = 0, -- за який час проходить пересування камери
 }
+
+
+function Camera:initScreenFrame(obj)
+    local xmin,xmax , ymin,ymax = obj:getScreenRect()
+    local mx, my = (xmax - xmin) / 2, (ymax - ymin) / 2
+
+    self.screenrect.x_min = math.min(0, self.mid_x - mx)
+    self.screenrect.x_max = math.min(self.mid_y, my)
+end
 
 
 
@@ -134,7 +140,7 @@ function Camera:updScale(dt)
 end
 
 function Camera:updPos(dt)
-    local a = self.timer_pos
+    -- local a = self.timer_pos
     if self.timer_pos >= 0 then
         local x, y = self.push_x, self.push_y
         if dt > self.timer_pos then

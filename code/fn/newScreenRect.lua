@@ -1,5 +1,5 @@
 -- межі відображення об’єктів
-function newScreenFrame(a, b, c, d)
+function newScreenRect(a, b, c, d)
     ---@class objScreenFrame
     local frame = {
         x_min = a or 0,
