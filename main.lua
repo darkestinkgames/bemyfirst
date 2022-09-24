@@ -113,4 +113,8 @@ end
 
 
 -- камера тест
-require('test/main2')
+-- require('test/main2')
+
+-- і знову камера тест
+require('test/main3')
+

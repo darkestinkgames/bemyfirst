@@ -1,7 +1,5 @@
 require('test/mainreset')
 
-function love.load(...)
-end
 function love.draw()
     Camera2:draw(Test2)
 end
@@ -211,8 +209,3 @@ do
 
     -- Camera2:pushPos( Camera2.x.min, Camera2.y.min )
 end
-
-
-
-function love.mousepressed(x, y, button, istouch, presses) end
-function love.resize(w, h) end
