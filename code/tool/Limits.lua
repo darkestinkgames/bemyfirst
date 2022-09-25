@@ -7,13 +7,21 @@ Limits = {
                     local add = value - self[key]
                     rawset(self, "_min", self.min + add)
                     rawset(self, "_max", self.max + add)
-                    rawset(self, "_value", self.value + add)
+                    self.value = self.value + add
+                    -- print(self.value)
                 end
                 if key == "value" then
                     rawset(self, "_value", math.max(self.min, math.min(self.max, value)))
                 end
                 if key == "delta" then
-                    rawset(self, "_max", self.min + value)
+                    if rawget(self, "_value") then
+                        local k = self.k
+                        rawset(self, "_max", self.min + value)
+                        self.k = k
+                    else
+                        -- print(value)
+                        rawset(self, "_max", self.min + value)
+                    end
                 end
                 if key == "k" then
                     rawset(self, "_value", self.delta * value + self.min)
@@ -22,7 +30,7 @@ Limits = {
         end,
         __index = function (self, key)
             if key == "min" or key == "max" then
-                return rawget(self, "_" .. key) or 0
+                return rawget(self, "_" .. key)
             end
             if key == "value" then
                 return rawget(self, "_value") or self.max
@@ -37,14 +45,19 @@ Limits = {
                 return self.delta ~= 0 and math.abs(self.value - self.min) / self.delta or 0
             end
         end,
-        __call = function (self, a, b, c)
+        __call = function (self, a, b, value)
             local input = {a or 0, b or 0}
             table.sort(input)
-            rawset(self, '_min', input[1])
-            rawset(self, '_min', input[2])
-            if c then
-                self.value = c
+            if #input > 0 then
+                rawset(self, '_max', input[#input])
             end
+            if #input > 1 then
+                rawset(self, '_min', input[1])
+            end
+            if value then
+                self.value = value
+            end
+            -- print(rawget(self, "_min"), rawget(self, "_max"), rawget(self, "_value"))
         end,
     },
 }

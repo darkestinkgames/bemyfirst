@@ -28,22 +28,24 @@ Map = {
 
 -- дані для камери
 function Map:getScreenRect()
-    return self.screenrect.x_min, self.screenrect.x_max, self.screenrect.y_min, self.screenrect.y_max
+    -- return self.screenrect.x_min, self.screenrect.x_max, self.screenrect.y_min, self.screenrect.y_max
 end
 
 -- рамка відображення на екрані
 function Map:initScreenRect()
-    self.screenrect = newScreenRect()
+    local screenrect = newScreenRect()
     for key, cell in pairs(self.cell_grid) do
-        self.screenrect.x_max = math.max(
-            self.screenrect.x_max,
+        screenrect.x_max = math.max(
+            screenrect.x_max,
             cell.screen.x + Sprite[cell.sprites[1]]:getWidth()
         )
-        self.screenrect.y_max = math.max(
-            self.screenrect.y_max,
+        screenrect.y_max = math.max(
+            screenrect.y_max,
             cell.screen.y + Sprite[cell.sprites[1]]:getHeight()
         )
     end
+    self.screen_width = Limits:new(screenrect.x_min, screenrect.x_max)
+    self.screen_height = Limits:new(screenrect.y_min, screenrect.y_max)
 end
 
 ---Завантажити карту

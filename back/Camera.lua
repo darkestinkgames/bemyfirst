@@ -1,5 +1,5 @@
 ---@class gameCamera
-Camera = {
+Camera1 = {
     scale_min = 1,
     scale_max = 5,
 
@@ -32,7 +32,7 @@ Camera = {
 }
 
 
-function Camera:initScreenFrame(obj)
+function Camera1:initScreenFrame(obj)
     local xmin,xmax , ymin,ymax = obj:getScreenRect()
     local mx, my = (xmax - xmin) / 2, (ymax - ymin) / 2
 
@@ -42,20 +42,20 @@ end
 
 
 
-function Camera:initScale(scale)
+function Camera1:initScale(scale)
     self:setScale(scale)
     self:pushScale(scale, 0)
 end
 
-function Camera:initPosition(x, y)
+function Camera1:initPosition(x, y)
     self:setPosition(x, y)
     self:pushPosition(x, y, 0)
 end
 
 
 
-function Camera:setScale(scale)
-    scale = math.max(Camera.scale_min, math.min(Camera.scale_max, scale))
+function Camera1:setScale(scale)
+    scale = math.max(Camera1.scale_min, math.min(Camera1.scale_max, scale))
     -- local k = scale / self.scale
     self.scale = scale
     -- self:setPosition(
@@ -64,14 +64,14 @@ function Camera:setScale(scale)
     -- )
 end
 
-function Camera:setPosition(x, y)
+function Camera1:setPosition(x, y)
     self.cam_x = x
     self.cam_y = y
 end
 
 
 
-function Camera:pushScale(scale, timer)
+function Camera1:pushScale(scale, timer)
     scale = math.min(self.scale_max, math.max(self.scale_min, scale))
     timer = timer or self.pushtimer_scale
     
@@ -89,7 +89,7 @@ function Camera:pushScale(scale, timer)
     -- print(a .. ' -> ' .. self.push_x)
 end
 
-function Camera:pushPosition(x, y, timer)
+function Camera1:pushPosition(x, y, timer)
     self.timer_pos = timer or self.pushtimer_pos
     self.push_x = x
     self.push_y = y
@@ -97,11 +97,11 @@ end
 
 
 
-function Camera:addScale(scale)
+function Camera1:addScale(scale)
     self:pushScale(self.push_scale + scale)
 end
 
-function Camera:addPosition(x, y)
+function Camera1:addPosition(x, y)
     self:pushPosition(self.cam_x + x * self.scale, self.cam_y + y * self.scale)
 end
 
@@ -109,7 +109,7 @@ end
 -- (a * 2) / (b * 2)
 
 
-function Camera:draw(...)
+function Camera1:draw(...)
     love.graphics.push()
     love.graphics.translate(self.cam_x, self.cam_y)
     love.graphics.scale(self.scale, self.scale)
@@ -122,12 +122,12 @@ end
 
 
 
-function Camera:update(dt)
+function Camera1:update(dt)
     self:updScale(dt)
     self:updPos(dt)
 end
 
-function Camera:updScale(dt)
+function Camera1:updScale(dt)
     if self.timer_scale >= 0 then
         if dt > self.timer_scale then
             self:setScale(self.push_scale)
@@ -139,7 +139,7 @@ function Camera:updScale(dt)
     end
 end
 
-function Camera:updPos(dt)
+function Camera1:updPos(dt)
     -- local a = self.timer_pos
     if self.timer_pos >= 0 then
         local x, y = self.push_x, self.push_y
@@ -160,7 +160,7 @@ end
 
 
 
-function Camera:resetFrame()
+function Camera1:resetFrame()
     local w , h = love.graphics.getWidth() / 2 , love.graphics.getHeight() / 2
 
     self:pushPosition( w - (self.mid_x - self.push_x) , h - (self.mid_y - self.push_y) , 0 )

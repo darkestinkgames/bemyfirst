@@ -7,6 +7,7 @@ function love.load(...)
     require('code/fn/newScreenRect')
 
     -- допоміжне
+    require('code/tool/Limits')
     require('code/tool/Position')
 
     -- технічна інф-а по грі
@@ -22,12 +23,15 @@ function love.load(...)
     require('code/game/Unit')
 
     -- типу класи, що не створюють об’єктів
-    require('code/game/Camera')
+    require('code/game/Camera4')
     require('code/game/Sprite')
 
+    -- 
     Map:load(1)
-    Camera:initScreenFrame(Map)
-    Camera:initScale(2)
+    Map:initScreenRect()
+
+    Camera:initScreenFrame()
+    -- Camera:pushScale(3, 1)
 end
 
 
@@ -65,7 +69,7 @@ function love.update(dt)
     dt = math.min(dt, 0.5)
 
     -- 
-    local step = 64
+    local step = 32
     local x, y = 0, 0
     if love.keyboard.isDown("w") then
         y = y + step
@@ -80,7 +84,7 @@ function love.update(dt)
         x = x - step
     end
     if x ~= 0 or y ~= 0 then
-        Camera:addPosition(x, y)
+        Camera:addPosition(x, y, dt)
     end
 
     -- 
@@ -100,7 +104,7 @@ function love.mousepressed(x, y, button, istouch, presses) end
 
 
 function love.wheelmoved( x , y )
-    Camera:addScale(y)
+    Camera:addScale(y * .5)
 end
 
 
@@ -115,6 +119,11 @@ end
 -- камера тест
 -- require('test/main2')
 
+
 -- і знову камера тест
-require('test/main3')
+-- require('test/main3')
+
+
+-- Limits
+require('test/main4')
 
