@@ -12,4 +12,4 @@
 
 --
 
-| [нотатки](log/true_story.md) | [(commits/main)](https://github.com/darkestinkgames/bemyfirst/commits/main) |
+| [нотатки, день 1–](log/true_story.md) | [commits/main](https://github.com/darkestinkgames/bemyfirst/commits/main) |

@@ -5,9 +5,10 @@ function love.load(...)
     require('code/fn/getCopy')
     require('code/fn/getKey')
     require('code/fn/newScreenRect')
+    require('code/fn/printTable')
 
     -- допоміжне
-    require('code/tool/Limits')
+    require('code/tool/Limits4')
     require('code/tool/Position')
 
     -- технічна інф-а по грі
@@ -28,7 +29,7 @@ function love.load(...)
 
     -- 
     Map:load(1)
-    Map:initScreenRect()
+    -- Map:initScreenRect()
 
     Camera:initScreenFrame()
     -- Camera:pushScale(3, 1)
@@ -125,5 +126,14 @@ end
 
 
 -- Limits
-require('test/main4')
+-- require('test/main4')
+
+-- камера
+-- require('test/main5')
+
+-- знову камера (недотестив)
+-- require('test/main6')
+
+-- ще разок CamVals, перш ніж зібрати
+require('test/main7')
 

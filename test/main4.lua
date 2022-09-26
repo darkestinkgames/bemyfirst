@@ -1,4 +1,5 @@
 require('test/mainreset')
+require('code/fn/printTable')
 
 -- -- -- -- -- [ test ] -- -- -- -- --
 
@@ -138,6 +139,7 @@ do -- допоміжне
         local add = mid - obj.mid
         rawset(obj, "_min", obj.min + add)
         rawset(obj, "_max", obj.max + add)
+        rawset(obj, "_mid", mid)
         rawset(obj, "_value", obj.value + add)
     end
 
@@ -180,9 +182,13 @@ end
 
 Test4 = Limits:new(20, 120)
 
+printTable(Test4)
+
+-- -- -- -- -- [ test ] -- -- -- -- --
+
 function love.draw()
     love.graphics.rectangle("line", Test4.min, 120, Test4.delta, 4)
-    love.graphics.circle("fill", Test4.value, 120, 8, 20)
+    love.graphics.circle("fill", Test4.value, 122, 8, 20)
 end
 
 function love.mousepressed(x, y, button, istouch, presses)
@@ -196,7 +202,8 @@ function love.mousepressed(x, y, button, istouch, presses)
             Test4.max = x
         end
     end
+    if button == 3 then
+        Test4.mid = x
+    end
 end
-
--- -- -- -- -- [ test ] -- -- -- -- --
 

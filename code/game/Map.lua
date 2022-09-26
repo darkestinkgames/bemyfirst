@@ -29,6 +29,7 @@ Map = {
 -- дані для камери
 function Map:getScreenRect()
     -- return self.screenrect.x_min, self.screenrect.x_max, self.screenrect.y_min, self.screenrect.y_max
+    return self.screen_width, self.screen_height
 end
 
 -- рамка відображення на екрані
