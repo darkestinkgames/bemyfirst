@@ -41,7 +41,6 @@ function love.keypressed(key)
 
     if key == 'f4' then
         gameScreenToggle()
-        Camera:resetFrame()
     end
 
     -- local step = 64
@@ -95,7 +94,6 @@ end
 
 
 function love.resize(w, h)
-    Camera:resetFrame()
 end
 
 
@@ -133,7 +131,12 @@ end
 
 -- знову камера (недотестив)
 -- require('test/main6')
+require('test/main6a')
 
 -- ще разок CamVals, перш ніж зібрати
-require('test/main7')
+-- require('test/main7')
+-- require('test/main7a')
+
+-- і знову камера, під зібрану CamVals
+-- require('test/main8')
 
