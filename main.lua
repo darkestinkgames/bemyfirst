@@ -131,7 +131,7 @@ end
 
 -- знову камера (недотестив)
 -- require('test/main6')
-require('test/main6a')
+-- require('test/main6a')
 
 -- ще разок CamVals, перш ніж зібрати
 -- require('test/main7')
@@ -140,3 +140,5 @@ require('test/main6a')
 -- і знову камера, під зібрану CamVals
 -- require('test/main8')
 
+-- ще одна ідея для камери
+require('test/cam/main')
