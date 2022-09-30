@@ -1,4 +1,5 @@
-Copyright 2015 The Rubik Project Authors (https://github.com/googlefonts/rubik)
+Copyright (c) 2011, Cyreal (www.cyreal.org),
+with Reserved Font Name "Marmelad".
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:

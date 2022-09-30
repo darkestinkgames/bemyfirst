@@ -1,94 +1,26 @@
 function love.load(...)
-
-    -- базові глобальні функції, які покищо нема де притулити
-    require('code/fn/gameScreenToggle')
-    require('code/fn/getCopy')
-    require('code/fn/getKey')
-    require('code/fn/newScreenRect')
-    require('code/fn/printTable')
-
-    -- допоміжне
-    require('code/tool/Limits4')
-    require('code/tool/Position')
-
-    -- технічна інф-а по грі
-    require('code/game/Data')
-
-    ----- мапа
-    require('code/game/Map')
-    -- чарунки
-    require('code/game/Cell')
-    -- будівлі
-    -- юніти
-    require('code/game/UnitMove')
-    require('code/game/Unit')
-
-    -- типу класи, що не створюють об’єктів
-    require('code/game/Camera4')
-    require('code/game/Sprite')
-
-    -- 
-    Map:load(1)
-    -- Map:initScreenRect()
-
-    Camera:initScreenFrame()
-    -- Camera:pushScale(3, 1)
+    -- local fontsize = 18
+    local fontsize = 30
+    love.graphics.setDefaultFilter("nearest", "nearest")
+    --// Font1 = love.graphics.newFont('font/Rubik/static/Rubik-Regular.ttf', fontsize)
+    --// Font2 = love.graphics.newFont('font/Roboto/Roboto-Regular.ttf', fontsize)
+    --// Font3 = love.graphics.newFont('font/Tenor_Sans/TenorSans-Regular.ttf', fontsize)
+    Font1 = love.graphics.newFont('font/Noto_Sans/NotoSans-Regular.ttf', fontsize)
+    Font2 = love.graphics.newFont('font/Marmelad/Marmelad-Regular.ttf', fontsize)
 end
 
 
 function love.keypressed(key)
     if key == 'escape' then love.event.push('quit') end
-
-    if key == 'f4' then
-        gameScreenToggle()
-    end
-
-    -- local step = 64
-    -- if key == 'w' then
-    --     Camera:addPosition(0, step)
-    -- end
-    -- if key == 's' then
-    --     Camera:addPosition(0, -step)
-    -- end
-    -- if key == 'a' then
-    --     Camera:addPosition(step, 0)
-    -- end
-    -- if key == 'd' then
-    --     Camera:addPosition(-step, 0)
-    -- end
 end
 
 
 function love.draw()
-    Camera:draw(Map)
 end
-
 
 
 function love.update(dt)
     dt = math.min(dt, 0.5)
-
-    -- 
-    local step = 32
-    local x, y = 0, 0
-    if love.keyboard.isDown("w") then
-        y = y + step
-    end
-    if love.keyboard.isDown("s") then
-        y = y - step
-    end
-    if love.keyboard.isDown("a") then
-        x = x + step
-    end
-    if love.keyboard.isDown("d") then
-        x = x - step
-    end
-    if x ~= 0 or y ~= 0 then
-        Camera:addPosition(x, y, dt)
-    end
-
-    -- 
-    Camera:update(dt)
 end
 
 
@@ -103,16 +35,9 @@ function love.mousepressed(x, y, button, istouch, presses) end
 
 
 function love.wheelmoved( x , y )
-    Camera:addScale(y * .5)
 end
 
 
-
--- розкоментувати main1, щоб запускалась попередня версія (до того, як усе зламав)
--- F4 перемикач (екран/вікно)
--- (будь-який) клік миші щоб встановити умовного юніта (ріки, гори та моря) — для перевірки пошук шляху
--- Esc — вихід
--- require('test/main1')
 
 
 -- камера тест
@@ -141,4 +66,4 @@ end
 -- require('test/main8')
 
 -- ще одна ідея для камери
-require('test/cam/main')
+-- require('test/cam/main')
