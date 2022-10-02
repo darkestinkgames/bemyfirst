@@ -106,3 +106,10 @@ end
 
 -- ще одна ідея для камери
 -- require('test/cam/main')
+
+
+-- анімація нових спрайтів (але краще відкласти на потім)
+-- require 'script/test/main1'
+
+-- хоча anim8 нахвалювали, треба спробувати
+require 'script/test/main2'
