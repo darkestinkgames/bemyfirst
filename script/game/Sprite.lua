@@ -41,9 +41,9 @@ Sprite = setmetatable(Sprite, {
             end
         end,
     },
-    __call = function (list, sprite, x, y)
+    __call = function (list, sprite, x, y, scale)
         if list[sprite] then
-            love.graphics.draw(list[sprite], x, y)
+            love.graphics.draw(list[sprite], x, y, nil, scale)
         end
     end,
 })

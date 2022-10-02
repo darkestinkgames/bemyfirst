@@ -1,4 +1,3 @@
-SelectedCell = nil ---@type objGridCell
 -- 
 function love.load(...)
 
@@ -11,12 +10,15 @@ function love.load(...)
     love.graphics.setFont(Font1)
 
     require 'script/fn/fnDrawables'
-    require 'script/fn/getGridFrom'
-    require 'script/fn/initTiles'
-    require 'script/game/Sprite'
+    --// require 'script/fn/getGridFrom'
+    --// require 'script/fn/initTiles'
+    require 'script/fn/fnPrintTable'
     require 'script/game/SimpleCamera'
-    require 'script/map/MapaTileData'
+    require 'script/game/Sprite'
     require 'script/map/Grid'
+    require 'script/map/MapaTileData'
+    require 'script/map/MapaCell'
+    -- require ''
     -- require ''
 
     require 'back/DrawableDummie'
@@ -25,6 +27,12 @@ function love.load(...)
 
     Grid:getTilesFrom('assets/map/1/1')
     SimpleCamera:resize()
+
+    Sprite:add('assets/sprite/medival16.png', 16)
+    -- Sprite:add('assets/sprite/MiniArcherMan.png', 32)
+
+    -- Mini = love.graphics.newImage('assets/sprite/MiniArcherMan.png')
+    Mini = love.graphics.newImage('assets/sprite/MiniHorseMan.png')
 end
 
 -- 
@@ -36,6 +44,7 @@ end
 function love.draw()
     SimpleCamera:start()
     fnDrawables()
+    love.graphics.draw(Mini)
     SimpleCamera:stop()
 
     local cell = Grid:getCell(SimpleCamera:getMousePosition())
@@ -45,6 +54,7 @@ function love.draw()
         love.graphics.setColor(0, 0, 0)
         love.graphics.print(cell.tile.nazva .. "\n" .. cell.key, 4, 4)
     end
+
 end
 
 -- 
@@ -59,7 +69,12 @@ end
 
 -- 
 function love.mousepressed(x, y, button, istouch, presses)
-    SelectedCell = Grid:getCell(SimpleCamera:getMousePosition())
+    if button == 1 then
+        Grid.selected_cell = Grid:getCell(SimpleCamera:getMousePosition())
+    end
+    if button == 2 then
+        Grid.selected_cell = nil
+    end
 end
 
 -- 

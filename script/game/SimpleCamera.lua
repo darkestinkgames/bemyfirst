@@ -19,9 +19,9 @@ function SimpleCamera:start()
 end
 
 function SimpleCamera:stop()
-    if SelectedCell then
+    if Grid.selected_cell then
         love.graphics.setColor(0.15, 0.15, 0.15, 0.4)
-        love.graphics.rectangle("fill", SelectedCell.screen_x, SelectedCell.screen_y, 16, 16)
+        love.graphics.rectangle("fill", Grid.selected_cell.screen_x, Grid.selected_cell.screen_y, Grid.tilesize, Grid.tilesize)
     else
         love.graphics.setColor(1, 1, 1)
         local x, y = self:getMousePosition()
