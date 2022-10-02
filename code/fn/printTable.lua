@@ -1,6 +1,4 @@
 ---Вивести зміст таблиці
----@param obj table таблиця на друк
----@param max any на скільки рівнів
 function printTable(...)
     local obj = nil
     local max = 4

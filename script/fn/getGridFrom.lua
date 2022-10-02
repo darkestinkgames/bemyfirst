@@ -17,23 +17,25 @@
 -- та згрупувати їх по цій координаті в окрему чарунку
 
 
----@param filename string # шлях до файлу
-function getSpritecodeGrid(filename)
+function getGridFrom(filename)
     local grid = {}
 
     local data_input = require(filename)
     local width = data_input.width
 
     for i = 1, #data_input.layers[1].data do
-        local sprites = {
-            x = (i - 1) % width + 1,
-            y = math.floor((i - 1) / width + 1)
+        local cell = {
+            sprites = {},
+            grid_x = (i - 1) % width + 1,
+            grid_y = math.floor((i - 1) / width + 1),
         }
+        cell.key = 'x' .. cell.grid_x .. 'y' .. cell.grid_y
+
         for f = 1, #data_input.layers do
-            table.insert(sprites, data_input.layers[f].data[i])
+            cell.sprites[#cell.sprites+1] = data_input.layers[f].data[i]
         end
 
-        grid[#grid+1] = sprites
+        grid[cell.key] = cell
     end
 
     return grid
