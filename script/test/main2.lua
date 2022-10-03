@@ -2,16 +2,18 @@ require 'script/test/mainreset'
 
 love.graphics.setDefaultFilter("nearest", "nearest")
 
-local anim8 = require 'script/test/libs/anim8-master/anim8'
-local image, animation
+local ups = require 'script/test/libs/updatables'
+
+local anim8 = require 'script/libs/anim8-master/anim8'
+local image
 
 
 function love.load()
-    image = love.graphics.newImage('assets/sprite/MiniHorseMan.png')
+    image = love.graphics.newImage('assets/sprite/mf_humans/MiniHorseMan.png')
     local g = anim8.newGrid(32, 32, image:getWidth(), image:getHeight())
 
     Horsman = {}
-    Horsman.ani_set = {
+    Horsman.ani_data = {
         idle = anim8.newAnimation(g('1-4',1), 0.15),
         walk = anim8.newAnimation(g('1-6',2), 0.1),
         attack = anim8.newAnimation(g('1-6',3), 0.15),
@@ -19,12 +21,16 @@ function love.load()
         jump = anim8.newAnimation(g('1-3',5), 0.25),
         death = anim8.newAnimation(g('1-6',6), 0.2),
     }
-    Horsman.ani_state = 'walk' ---@type 'idle'|'walk'|'attack'|'hit'|'jump'|'death'
-    Horsman.animation = Horsman.ani_set[Horsman.ani_state]
+    for key, ani in pairs(Horsman.ani_data) do ani.key = key print(ani.key) end
+
+    -- Horsman.animation.n
+    --? Horsman.ani_state = 'walk' ---@type 'idle'|'walk'|'attack'|'hit'|'jump'|'death'
+    Horsman.animation = Horsman.ani_data.idle
+    ups:addItem(Horsman):setField('animation')
 end
 
 function love.update(dt)
-    Horsman.animation:update(dt)
+    ups:update(dt)
 end
 
 function love.draw()
@@ -43,7 +49,7 @@ end
 
 function love.mousepressed(x, y, button, istouch, presses)
     if button == 1 then
-        local next_list = {
+        local _next_list = {
             idle = 'walk',
             walk = 'attack',
             attack = 'hit',
@@ -51,8 +57,7 @@ function love.mousepressed(x, y, button, istouch, presses)
             jump = 'death',
             death = 'idle',
         }
-        Horsman.ani_state = next_list[Horsman.ani_state]
-        Horsman.animation = Horsman.ani_set[Horsman.ani_state]
+        Horsman.animation = Horsman.ani_data[_next_list[Horsman.animation.key]]
     end
     if button == 2 then
         Horsman.animation:flipH()
