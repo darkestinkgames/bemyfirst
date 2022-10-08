@@ -17,10 +17,9 @@ function grid.newPathfinder()
 end
 
 function grid.newCell(code_list, x,y)
-  for
+  for i, code in ipairs(code_list) do   end
   local c = cell.new(code_list, x,y):initScreen(grid.tilesize)
   cell_grid[c.key] = c
-  local s = strc.new
 end
 
 function grid.newMap(filename)
