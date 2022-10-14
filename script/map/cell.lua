@@ -22,6 +22,10 @@ end
 ---@class map.Cell
 local Cell = {}
 local mtCell = {__index = Cell}
+
+function Cell:getScreen(ox, oy)
+  return self.sx + (ox or 0), self.sy + (oy or 0)
+end
 --#endregion
 
 
