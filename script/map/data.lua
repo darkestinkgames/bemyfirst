@@ -1,19 +1,22 @@
-local width, height
-local tilewidth, tileheight
 
-local data = {}
+local data = {
+  width       = nil,  ---@type number  ширина карти, чарунок
+  height      = nil,  ---@type number  висота
+  tilewidth   = nil,  ---@type number  ширина тайла однієї чарунки
+  tileheight  = nil,  ---@type number  висота
+}
 
-function data.getTile(kw, kh)
-  return tilewidth * (kw or 1), tileheight * (kh or 1)
+function data.getTileSize(kw, kh)
+  return data.tilewidth * (kw or 1), data.tileheight * (kh or 1)
 end
-function data.getMap()
-  return width, height
+function data.getMapSize()
+  return data.width, data.height
 end
-function data.setTile(w, h)
-  tilewidth, tileheight = w, h
+function data.setTileSize(w, h)
+  data.tilewidth, data.tileheight = w, h
 end
-function data.setMap(w, h)
-  width, height = w, h
+function data.setMapSize(w, h)
+  data.width, data.height = w, h
 end
 
 return data

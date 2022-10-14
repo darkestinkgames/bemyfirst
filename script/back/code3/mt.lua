@@ -10,8 +10,14 @@ local obj = mt.getMt(objClass)
 ]]
 local mt = {}
 
+---
+
 local mts = {}
 
+---@generic C
+---@param obj `A`
+---@param from table
+---@return `A`
 function mt.setMt(obj, from)
   print( type(obj), type(from) )
   assert(type(from) == "table" and type(obj) == "table")
