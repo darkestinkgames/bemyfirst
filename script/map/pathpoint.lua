@@ -44,7 +44,19 @@ function PathPoint:set(value, from) ---@type fun(self:map.PathPoint, value:numbe
 end
 mtPathPoint.__call = PathPoint.set
 
--- todo : drawPath(pp) , setType(v)
+function PathPoint:reset()
+  self.value = nil
+  self.from = nil
+  self.draw = nil
+end
+
+function PathPoint:init(value, endpoint)
+  if self.value == 0
+  then return end
+  if self.value > value
+  then self.draw = endpoint and self.draw4 or self.draw3
+  else self.draw = self.value == value and self.draw4 or self.draw3 end
+end
 
 
 local pathpoint = {}
