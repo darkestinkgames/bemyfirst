@@ -27,4 +27,4 @@ function mt.setCall(objClass, fn)
   mts[key].__call = fn
 end
 
-return mt
+return setmetatable(mt, {__index = mt.setCall})

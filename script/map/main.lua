@@ -1,11 +1,11 @@
+local data = require 'script/map/data'
+
+data.setTile(32, 32)
 
 local map = {}
 
 local cell_grid = {}
 local cell_list = {}
-
-local tilewidth, tileheight = 32, 32
-local mapwidth, mapheight
 
 local game = {
   round = 1,
