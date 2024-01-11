@@ -1,8 +1,6 @@
 local data = require 'script/map/data'
 
 
---#region locals
-
 local function initScreenGrid(sx, sy) -- -> gx, gy
   local w,h = data.getTileSize()
   return math.floor(sx / w + 1), math.floor(sy / h + 1)
@@ -14,22 +12,21 @@ end
 local function initKey(gx, gy)
   return ("x%sy%s"):format(gx, gy)
 end
---#endregion
 
-
---#region » map.Cell
 
 ---@class map.Cell
 local Cell = {}
 local mtCell = {__index = Cell}
 
+function Cell:draw()
+end
+function Cell:getTileSize(kw, kh)
+  return data.getTileSize(kw, kh)
+end
 function Cell:getScreen(ox, oy)
   return self.sx + (ox or 0), self.sy + (oy or 0)
 end
---#endregion
 
-
---#region » cell »
 
 local cell = {}
 
@@ -51,7 +48,6 @@ function cell.new(gx, gy, codes)
   obj.sx, obj.sy = initGridScreen(gx, gy)
   return setmetatable(obj, mtCell)
 end
---#endregion
 
 
 return cell

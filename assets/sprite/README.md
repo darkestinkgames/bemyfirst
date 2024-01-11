@@ -11,3 +11,7 @@
    * [MiniFolks - Dwarfs](https://lyaseek.itch.io/minifdwarfs)
    * [MiniFolks - Demons](https://lyaseek.itch.io/minifdemons)
    * [MiniFolks - Elves](https://lyaseek.itch.io/minifelves)
+
+\* походу автор мініфолків — росня 😑
+з іншого боку, деякі з його спрайтів були у [бандлі за Україну](https://itch.io/b/1316/bundle-for-ukraine) 🤔
+я хз, хай лишається покищо

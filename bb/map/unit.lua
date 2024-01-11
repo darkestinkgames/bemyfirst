@@ -1,18 +1,58 @@
 
+
+
+local function newMovement(range, pass)
+  ---@class map.UnitMov
+  local obj = {
+    name   = "",
+    range  = range,
+    pass   = pass,
+    ap     = 1,
+    delay  = 1,
+    cd     = 0,
+  }
+  return obj
+end
+
+
 ---@class map.Unit
 local Unit = {}
 local mtUnit = {}
 
 function Unit:pathCost(cell) end
-function Unit:pathReset() end
+function Unit:pathReset()
+  for key, pp in pairs(self.pathpoint_list)
+  do pp:reset() end
+end
 function Unit:pathUpdate() end
-function Unit:pathDraw() end
+function Unit:pathDraw()
+  if self.target then
+    local pp = self:getPathpoint(self.target)
+    while pp do
+      pp:draw()
+      pp = pp.from
+    end
+  else
+    for key, pp in pairs(self.pathpoint_list)
+    do pp:draw() end
+  end
+end
 
-function Unit:getTeam() end
-function Unit:getPlayer() end
-function Unit:getPathpoint(cell) end
+function Unit:getTeam()
+  return self.owner.team
+end
+function Unit:getPlayer()
+  return self.owner.id
+end
+function Unit:getPathpoint(cell) ---@param cell map.Cell
+  return self.pathpoint_list[cell.key]
+end
 
-function Unit:setCell(cell) end
+function Unit:setCell(cell)
+  assert(not cell.unit, "Десь трапилась помилка")
+  self.cell.unit = nil
+  self.cell, cell.unit = cell, self
+end
 
 function Unit:isReady() end -- чи готовий діяти? (очки дій/черга)
 
@@ -34,9 +74,16 @@ function Unit:actDive() end -- покищо ніхто не вміє плава�
 
 local unit = {}
 
-function unit.new(player, cell)
+---@param owner map.Player
+---@param cell map.Cell
+---@return map.Unit
+function unit.new(owner, movement, cell)
   ---@class map.Unit
   local obj = {
+    pathpoint_list = {}, ---@type table<string, map.PathPoint>
+    owner   = owner,  ---@type map.Player  # гравець та команда
+    cell    = cell,   ---@type map.Cell    # місце розташування
+    target  = nil,    ---@type map.Cell?   # пункт призначення
   }
   return setmetatable(obj, mtUnit)
 end
