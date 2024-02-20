@@ -1,4 +1,11 @@
 
 function love.load(...)
-  -- отже, ще раз
+
+  Numbers = require 'scripts.mods.numbers'
+
+  GState = require 'scripts.mods.GState'
+  require 'scripts.state.game_gs'
+
+  GState.game_gs()
+
 end
